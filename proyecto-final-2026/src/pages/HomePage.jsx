@@ -446,7 +446,7 @@ export default function HomePage({
             className={`reddit-feed-tab ${activeTab === 'for-you' ? 'active' : ''}`}
             onClick={() => onChangeTab && onChangeTab('for-you')}
           >
-            ✨ Para Ti (Feed Global)
+            ✨ Para Ti<span className="hide-mobile"> (Feed Global)</span>
           </button>
           <button
             type="button"

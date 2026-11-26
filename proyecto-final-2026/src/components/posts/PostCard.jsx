@@ -430,7 +430,9 @@ export default function PostCard({
               >
                 <IconComment size={15} />
                 <strong>{post.commentCount}</strong>
-                <span>{post.commentCount === 1 ? 'comentario' : 'comentarios'}</span>
+                <span className="action-pill-text">
+                  {post.commentCount === 1 ? 'comentario' : 'comentarios'}
+                </span>
               </button>
 
               <button
