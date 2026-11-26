@@ -1,0 +1,516 @@
+/* ==========================================================================
+   SISTEMA DE ANIMACIONES FLUIDAS, GLASSMORPHISM Y MICRO-INTERACCIONES
+   ========================================================================== */
+
+/* 1. Orbes de luz ambiental flotantes en segundo plano */
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.45;
+  mask-image: radial-gradient(ellipse at 50% 25%, #000 30%, transparent 80%);
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(85px);
+  opacity: 0.75;
+  will-change: transform;
+}
+
+.ambient-orb-1 {
+  width: 440px;
+  height: 440px;
+  top: -120px;
+  left: -80px;
+  background: var(--orb-1);
+  animation: orbDriftOne 18s ease-in-out infinite alternate;
+}
+
+.ambient-orb-2 {
+  width: 390px;
+  height: 390px;
+  top: 15%;
+  right: -110px;
+  background: var(--orb-2);
+  animation: orbDriftTwo 22s ease-in-out infinite alternate;
+}
+
+.ambient-orb-3 {
+  width: 340px;
+  height: 340px;
+  bottom: -90px;
+  left: 28%;
+  background: var(--orb-3);
+  animation: orbDriftThree 20s ease-in-out infinite alternate;
+}
+
+@keyframes orbDriftOne {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(90px, 70px, 0) scale(1.14);
+  }
+}
+
+@keyframes orbDriftTwo {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-85px, 95px, 0) scale(1.1);
+  }
+}
+
+@keyframes orbDriftThree {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(70px, -65px, 0) scale(1.12);
+  }
+}
+
+/* 2. Entrada en cascada (Staggered Fade & Slide Up) para tarjetas y secciones */
+@keyframes cardEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-stagger {
+  animation: cardEntrance 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--stagger, 0) * 55ms);
+}
+
+/* 3. Flotación suave para la ilustración vectorial HeroArtwork */
+@keyframes floatCardOne {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes floatCardTwo {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.svg-float-slow {
+  animation: floatCardOne 5.5s ease-in-out infinite;
+}
+
+.svg-float-delayed {
+  animation: floatCardTwo 6.2s ease-in-out infinite;
+}
+
+/* 4. Micro-interacción al votar (+1 Like / Dislike) */
+@keyframes voteSpringPop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.24) translateY(-2px);
+  }
+  70% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.vote-burst {
+  animation: voteSpringPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes plusOneFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -26px) scale(1.15);
+  }
+}
+
+.floating-plus-one {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  pointer-events: none;
+  font-size: 0.76rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  border-radius: 999px;
+  animation: plusOneFloat 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  z-index: 10;
+}
+
+.floating-plus-like {
+  color: var(--success);
+  background: var(--success-soft);
+  border: 1px solid var(--success);
+}
+
+.floating-plus-dislike {
+  color: var(--danger);
+  background: var(--danger-soft);
+  border: 1px solid var(--danger);
+}
+
+/* 5. Animación de apertura para Modales y Lightbox */
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSpringIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.modal-backdrop {
+  animation: backdropFadeIn 0.2s ease-out both;
+}
+
+.modal-card,
+.lightbox-content {
+  animation: modalSpringIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 6. Shimmer Glass Skeleton (Efecto de barrido luminoso durante carga) */
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border-highlight) 50%,
+    transparent 100%
+  );
+  animation: shimmerSweep 1.6s infinite;
+}
+
+/* 7. Notificaciones Toast Flotantes con Glassmorphism */
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.toast-viewport {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 360px;
+  pointer-events: none;
+}
+
+.toast-glass {
+  pointer-events: auto;
+  background: var(--bg-surface-elevated);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-hover);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.87rem;
+  font-weight: 600;
+  animation: toastSlideIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.toast-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  flex-shrink: 0;
+}
+
+/* 8. Pulso vivo para estado activo */
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(158, 206, 106, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(158, 206, 106, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(158, 206, 106, 0);
+  }
+}
+
+.activity-pulse,
+.status-dot {
+  animation: pulseRing 2.2s infinite;
+}
+
+
+/* ==========================================================================
+   9. ANIMACIONES AVANZADAS: DRAG & DROP MULTIMEDIA, FLUJO DE GRADIENTES Y VISTAS
+   ========================================================================== */
+
+/* Transición fluida al cambiar de página (Home, Subforo, Post, Perfil de Usuario) */
+@keyframes pageViewEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.992);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.page-container {
+  animation: pageViewEnter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Flujo vivo de gradientes en portadas de perfil y banners de subforo */
+@keyframes gradientAuroraFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.profile-cover-banner,
+.rail-community-banner,
+.subforum-card-banner {
+  background-size: 200% 200% !important;
+  animation: gradientAuroraFlow 8s ease infinite;
+}
+
+/* Animación de levitación y pulso en la zona Drag & Drop */
+@keyframes dropzonePulseBorder {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--accent-soft), inset 0 0 18px var(--accent-soft);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(122, 162, 247, 0), inset 0 0 28px var(--accent-soft);
+  }
+}
+
+@keyframes iconFloatBounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.08);
+  }
+}
+
+@keyframes spinRing {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes progressBarSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+.dropzone-dragging,
+.composer-drag-active {
+  border-color: var(--accent) !important;
+  animation: dropzonePulseBorder 1.4s infinite;
+  transform: scale(1.01);
+}
+
+.dropzone-dragging .dropzone-icon-orb {
+  animation: iconFloatBounce 0.9s ease-in-out infinite;
+}
+
+.glass-dropzone:hover .dropzone-icon-orb {
+  animation: iconFloatBounce 1.6s ease-in-out infinite;
+}
+
+/* Micro-resorte en píldoras interactivas al hacer clic */
+.reddit-action-pill:active,
+.author-profile-pill:active,
+.post-subforum-chip:active,
+.ribbon-pill:active,
+.btn:active {
+  transform: scale(0.95) !important;
+}
+
+
+/* ==========================================================================
+   10. EFECTO BORDER BEAM Y EXPLOSIÓN DE PARTÍCULAS (SPARK BURST) AL VOTAR
+   ========================================================================== */
+
+/* Haz de luz animado recorriendo el borde superior de las tarjetas Hero */
+@keyframes borderBeamSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.border-beam-card {
+  position: relative;
+}
+
+.border-beam-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--accent) 45%,
+    var(--accent-secondary, #bb9af7) 55%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: borderBeamSweep 5.5s linear infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Explosión radial de chispas luminosas (Spark Burst) al dar Like o Dislike */
+.spark-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+
+.spark-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.spark-ring-like .spark-dot {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.spark-ring-dislike .spark-dot {
+  background: var(--danger);
+  box-shadow: 0 0 8px var(--danger);
+}
+
+@keyframes sparkFly1 {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-20px, -18px) scale(0.2); }
+}
+@keyframes sparkFly2 {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(20px, -18px) scale(0.2); }
+}
+@keyframes sparkFly3 {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-24px, 4px) scale(0.2); }
+}
+@keyframes sparkFly4 {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(24px, 4px) scale(0.2); }
+}
+@keyframes sparkFly5 {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-10px, -26px) scale(0.2); }
+}
+@keyframes sparkFly6 {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(10px, -26px) scale(0.2); }
+}
+
+.spark-dot.s1 { animation: sparkFly1 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.spark-dot.s2 { animation: sparkFly2 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.spark-dot.s3 { animation: sparkFly3 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.spark-dot.s4 { animation: sparkFly4 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.spark-dot.s5 { animation: sparkFly5 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.spark-dot.s6 { animation: sparkFly6 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }

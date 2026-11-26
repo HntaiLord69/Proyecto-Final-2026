@@ -1,89 +1,62 @@
+# LCC-chan — Foro Comunitario UNISON (Proyecto Final 2026)
 
-# DevForum
+Plataforma de discusión comunitaria estilo Reddit con diseño **Glassmorphism Pro** desarrollada para la **Licenciatura en Ciencias de la Computación (LCC)** de la **Universidad de Sonora (UNISON)**.
 
-DevForum es una plataforma de discusión comunitaria inspirada en Reddit, donde los usuarios pueden crear publicaciones, compartir ideas, participar en debates e interactuar con otros miembros.
+- **Portal Oficial LCC:** https://cc.unison.mx/
+- **Portal General UNISON:** https://www.unison.mx/
+- **Servidor Backend API REST:** `https://157.245.161.37/api`
 
-El objetivo del proyecto es ofrecer un espacio sencillo e intuitivo para compartir conocimientos, discutir diferentes temas y construir comunidades.
+---
 
-## Características
+## Características Principales
 
-- Crear y publicar entradas.
-- Explorar publicaciones y discusiones.
-- Comentar en las publicaciones.
-- Interactuar con otros usuarios.
-- Organizar las discusiones por temas o categorías.
+- **100% Conectado a la API REST (`LCC-chan`):**
+  - **Subforos (`Subforum`):** Listado paginado (`page`, `limit`, `sortBy`, `order`), creación (`POST /subforums`), consulta individual (`GET /subforums/:name`) y edición de descripción (`PATCH /subforums/:name`).
+  - **Publicaciones (`Post`):** Listado con filtros completos (`page`, `limit`, `afterDate`, `beforeDate`, `hasImage`, `sortBy`, `order`), creación (`POST`), consulta (`GET`), edición parcial sin campos protegidos (`PATCH`) y eliminación (`DELETE` con manejo de `204 No Content`).
+  - **Reacciones (`Likes / Dislikes`):** `POST .../like` y `POST .../dislike` con partículas animadas (*Spark Burst*).
+  - **Comentarios (`Comment`):** Consulta cronológica (`GET .../comments`) y publicación inmutable (`POST .../comments`) con insignia `OP` y respuesta rápida (`↩ Responder`).
+- **Experiencia Visual e Interactiva:**
+  - **10 Paletas de Colores Glassmorphic** (incluyendo *LCC UNISON*, *Tokyo Night*, *Reddit Dark*, *Gruvbox*, *Catppuccin*, *Dracula Pro*, *Nord Polar* y *Cyberpunk 84*).
+  - **Autocompletado en Vivo en la Barra de Búsqueda** para comunidades (`r/subforo`), perfiles de usuario (`u/autor`) y publicaciones con soporte de teclado (`↑↓`, `Tab`, `Enter`).
+  - **Páginas de Perfil e Historial de Usuario en 1 Clic (`#/u/:author`)** con cálculo de Karma, rangos académicos (*Búho Legendario*, *Senior Dev LCC*, *Búho Activo*, *Nuevo Búho*) y filtro por comunidad.
+  - **Subida de Imágenes Drag & Drop** con conversión automática a enlace externo `https://...` compatible con `imageUrl` del backend.
+  - **Vista Previa en Vivo (`✍️ Escribir` | `👁️ Vista Previa`)**, renderizador de bloques de código con botón de copiado, Carrusel de Tendencias y Paleta de Comandos (`Ctrl + K`).
 
-## Tecnologías
+---
 
-### Frontend
-- React
-- Vite
-- JavaScript
-- CSS
-
-### Backend
-- Node.js
-
-## Estructura del proyecto
+## Estructura del Repositorio
 
 ```text
-devforum/
-├── client/          # Aplicación frontend con React y Vite
-├── server/          # Servidor backend con Node.js
-├── .gitignore
-└── README.md
+Proyecto-Final-2026/
+├── proyecto-final-2026/        # Aplicación Frontend (React 19 + Vite 8)
+│   ├── public/                 # Emblemas oficiales PNG transparentes (lcc-logo.png, unison-logo.png)
+│   ├── src/
+│   │   ├── components/         # Navbar, Sidebar, RightRail, Posts, Subforos, Comentarios y UI
+│   │   ├── pages/              # HomePage, SubforumPage, PostDetailPage, UserProfilePage
+│   │   ├── services/           # Cliente HTTP y servicios REST (subforums, posts, comments)
+│   │   ├── styles/             # Variables de las 10 paletas, componentes y animaciones
+│   │   └── utils/              # Validadores, fechas ISO 8601, storage y uploader Drag & Drop
+│   └── package.json
+└── sprints/                    # Documentación técnica paso a paso del proyecto
+    ├── documentacion.md
+    ├── explicacion_proceso_proyecto.md
+    └── explicacion_proceso_proyecto.pdf
 ```
 
-## Instalación y ejecución
+---
 
-### Requisitos previos
-
-Asegúrate de tener instalados los siguientes programas:
-
-- Node.js
-- npm
-
-### Clonar el repositorio
+## Instalación y Ejecución
 
 ```bash
-git clone <url-del-repositorio>
-cd devforum
-```
-
-### Instalar dependencias
-
-Instala las dependencias del frontend y backend:
-
-```bash
-cd client
+cd proyecto-final-2026
 npm install
-
-cd ../server
-npm install
-```
-
-### Ejecutar el proyecto
-
-Para iniciar el frontend:
-
-```bash
-cd client
 npm run dev
 ```
 
-Para iniciar el backend:
+Para compilar para producción:
 
 ```bash
-cd server
-npm run dev
+cd proyecto-final-2026
+npm run lint
+npm run build
 ```
-
-## Contribuciones
-
-Las contribuciones, sugerencias y reportes de errores son bienvenidos.
-
-Si deseas contribuir al proyecto, puedes crear un fork del repositorio y enviar un Pull Request.
-
-## Licencia
-
-Este proyecto está distribuido bajo la licencia MIT.
