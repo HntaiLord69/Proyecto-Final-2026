@@ -6,7 +6,10 @@ import SubforumFormModal from './components/subforums/SubforumFormModal'
 import PostFormModal from './components/posts/PostFormModal'
 import CommandPaletteModal from './components/ui/CommandPaletteModal'
 import {
+  IconFlame,
   IconLogo,
+  IconPlus,
+  IconSparkles,
   IconUnisonLogo,
   LCC_OFFICIAL_URL,
   UNISON_OFFICIAL_URL,
@@ -315,15 +318,15 @@ export default function App() {
         onNotify={notify}
       />
 
-      {isMobileDrawerOpen && (
-        <div
-          className="mobile-drawer-backdrop"
-          onClick={() => setIsMobileDrawerOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-
       <div className={`app-layout ${isTheaterMode ? 'app-layout-theater' : ''}`}>
+        {isMobileDrawerOpen && (
+          <div
+            className="mobile-drawer-backdrop"
+            onClick={() => setIsMobileDrawerOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
         <Sidebar
           subforums={sidebarSubforums}
           authors={activeAuthors}
@@ -518,7 +521,7 @@ export default function App() {
             setHomeTab('for-you')
           }}
         >
-          <span className="mobile-dock-icon">🏠</span>
+          <IconSparkles size={17} />
           <span>Inicio</span>
         </button>
 
@@ -534,7 +537,7 @@ export default function App() {
             setHomeTab('popular')
           }}
         >
-          <span className="mobile-dock-icon">🔥</span>
+          <IconFlame size={17} />
           <span>Popular</span>
         </button>
 
@@ -543,7 +546,9 @@ export default function App() {
           className="mobile-dock-item mobile-dock-publish"
           onClick={() => setIsGlobalCreatePostOpen(true)}
         >
-          <span className="mobile-dock-plus">＋</span>
+          <span className="mobile-dock-plus">
+            <IconPlus size={16} />
+          </span>
           <span>Publicar</span>
         </button>
 
@@ -560,7 +565,7 @@ export default function App() {
           }}
         >
           <span className="mobile-dock-icon">🔖</span>
-          <span>Guardados ({bookmarksCount})</span>
+          <span>Guardados{bookmarksCount > 0 ? ` (${bookmarksCount})` : ''}</span>
         </button>
 
         <button
@@ -568,8 +573,8 @@ export default function App() {
           className={`mobile-dock-item ${isMobileDrawerOpen ? 'active' : ''}`}
           onClick={() => setIsMobileDrawerOpen((prev) => !prev)}
         >
-          <span className="mobile-dock-icon">🌐</span>
-          <span>Comunidades</span>
+          <span className="mobile-dock-icon">☰</span>
+          <span>Menú</span>
         </button>
       </nav>
 
